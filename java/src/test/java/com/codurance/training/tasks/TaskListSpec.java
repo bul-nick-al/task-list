@@ -192,7 +192,8 @@ public class TaskListSpec {
         taskList.execute(command5);
 
         assertEquals(testIO.getOut(), "test\n" +
-                "    [x] 0 task created " + Utils.dateToString(new Date()) + " \n");
+                        "    [-] 1 task two created " + Utils.dateToString(new Date()) + " \n" +
+                        "    [x] 0 task one created " + Utils.dateToString(new Date()) + " \n");
     }
 
     @Test public void
@@ -265,7 +266,8 @@ public class TaskListSpec {
         Command command6 = commandLineForToday.getCommand();
         taskList.execute(command6);
 
-        assertEquals(testIO.getOut(), "[-] 0 task created " + Utils.dateToString(new Date()) + " \n");
+        assertEquals(testIO.getOut(), "[-] 0 task one created " + Utils.dateToString(new Date()) + " \n" +
+                "[-] 1 task two created " + Utils.dateToString(new Date()) + " \n");
     }
 
     @Test public void
