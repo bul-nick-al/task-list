@@ -70,7 +70,7 @@ public class TaskListSpec {
         Command command4 = commandLineForBelong.getCommand();
         taskList.execute(command4);
 
-        assertEquals(testIO.getOut(), "Task added to project");
+        assertEquals(testIO.getOut(), "Task added");
     }
 
     @Test public void
@@ -92,13 +92,13 @@ public class TaskListSpec {
         Command command3 = commandLineForCheck.getCommand();
         taskList.execute(command3);
 
-        assertEquals(testIO.getOut(), "Task checked.");
+        assertEquals(testIO.getOut(), "Task checked");
 
         CommandLine commandLineForUncheck = new CommandLine(uncheckTask);
         Command command4 = commandLineForUncheck.getCommand();
         taskList.execute(command4);
 
-        assertEquals(testIO.getOut(), "Task unchecked.");
+        assertEquals(testIO.getOut(), "Task unchecked");
     }
 
     @Test public void
@@ -301,7 +301,7 @@ public class TaskListSpec {
         Command command6 = commandLineForToday.getCommand();
         taskList.execute(command6);
 
-        assertEquals(testIO.getOut(), "[-] 0 task created " + Utils.dateToString(new Date()) + " due 2020-05-07\n");
+        assertEquals(testIO.getOut(), "[-] 0 task one created " + Utils.dateToString(new Date()) + " due 2020-05-07\n");
     }
 
     @Test public void

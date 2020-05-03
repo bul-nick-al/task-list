@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class ProjectsRepository {
+
+    // Data
     private HashMap<String, Project> projects;
     private ArrayList<Task> tasks;
 
@@ -74,8 +76,11 @@ public class ProjectsRepository {
 
         if (!this.projects.containsKey(projectName))
             return AddTaskResult.PROJECT_NOT_EXISTS;
-        else
+        else {
             this.projects.get(projectName).addTask(newTask);
+            this.tasks.add(newTask);
+        }
+
 
         return AddTaskResult.TASK_ADDED;
     }
@@ -159,7 +164,6 @@ public class ProjectsRepository {
 
         return new ArrayList<>();
     }
-
 
     public int getNextTaskId() {
         return this.tasks.size();

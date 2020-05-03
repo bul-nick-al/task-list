@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface Command {
 
+    public void run(IO io, Formatter formatter, ProjectsRepository repository);
+
     String CMD_QUIT = "quit";
     String CMD_SHOW = "show";
     String CMD_ADD_PROJECT = "add project";
@@ -40,5 +42,5 @@ public interface Command {
             CMD_VIEW_BY_PROJECT,
             CMD_BELONG));
 
-    public void run(IO io, Formatter formatter, ProjectsRepository repository);
+
 }
