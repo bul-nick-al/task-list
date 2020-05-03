@@ -25,7 +25,7 @@ public class AddTaskCommand implements Command {
     }
 
     private void parseParameters(String rawParams) {
-        String[] parsedParams = rawParams.split(" ");
+        String[] parsedParams = rawParams.split(" ", 2);
         if (parsedParams.length < 2)
             return;
         projectName = parsedParams[0];

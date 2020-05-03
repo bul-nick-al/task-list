@@ -4,3 +4,4 @@ public interface IO {
     String read();
     void write(String string, boolean newLine);
 }
+
