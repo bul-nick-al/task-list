@@ -14,7 +14,6 @@ public class AddProjectCommand implements Command{
 
     @Override
     public void run(IO io, Formatter formatter, ProjectsRepository repository) {
-        String result = repository.addProject(name);
-        io.write(result, true);
+        io.write(formatter.show(repository.addProject(name)), true);
     }
 }

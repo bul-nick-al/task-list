@@ -22,7 +22,7 @@ public class DeadlineCommand implements Command{
             return;
         }
 
-        io.write(repository.setDeadline(taskId, date), true);
+        io.write(formatter.show(repository.setDeadline(taskId, date)), true);
     }
 
     private void parseParameters(String parameters) {

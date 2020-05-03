@@ -19,7 +19,7 @@ public class CheckCommand implements Command {
             return;
         }
 
-        io.write(repository.setChecked(taskId, true), true);
+        io.write(formatter.show(repository.setChecked(taskId, true)), true);
     }
 
     private void parseParameters(String rawParams) {

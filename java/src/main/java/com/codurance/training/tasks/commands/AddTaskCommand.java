@@ -16,8 +16,7 @@ public class AddTaskCommand implements Command {
     @Override
     public void run(IO io, Formatter formatter, ProjectsRepository repository) {
         if (projectName != null && taskDescription != null) {
-            String result = repository.addTaskToProject(taskDescription, projectName);
-            io.write(result, true);
+            io.write(formatter.show(repository.addTaskToProject(taskDescription, projectName)), true);
             return;
         }
 

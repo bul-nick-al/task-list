@@ -19,7 +19,7 @@ public class UncheckCommand implements Command {
             return;
         }
 
-        io.write(repository.setChecked(taskId, false), true);
+        io.write(formatter.show(repository.setChecked(taskId, false)), true);
     }
 
     private void parseParameters(String rawParams) {

@@ -16,7 +16,7 @@ public class BelongCommand implements Command {
     @Override
     public void run(IO io, Formatter formatter, ProjectsRepository repository) {
         if (projectName != null && taskId != null) {
-            io.write(repository.addTaskToProject(taskId, projectName), true);
+            io.write(formatter.show(repository.addTaskToProject(taskId, projectName)), true);
             return;
         }
         io.write("Not enough parameters", true);
