@@ -8,8 +8,10 @@ import java.util.HashMap;
 
 public class ProjectsRepository {
 
-    // Data
+    // All projects present in the system mapped with their names
     private HashMap<String, Project> projects;
+
+    // all tasks present in the system
     private ArrayList<Task> tasks;
 
     public ProjectsRepository() {
