@@ -4,9 +4,6 @@ import com.codurance.training.tasks.model.ProjectsRepository;
 import com.codurance.training.tasks.utils.Formatter;
 import com.codurance.training.tasks.utils.IO;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class AddTaskCommand implements Command {
 
     private String projectName;
@@ -18,7 +15,7 @@ public class AddTaskCommand implements Command {
 
     @Override
     public void run(IO io, Formatter formatter, ProjectsRepository repository) {
-        String result = repository.addTaskToProjects(taskDescription, new ArrayList<String>(Arrays.asList(projectName)));
+        String result = repository.addTaskToProject(taskDescription, projectName);
         io.write(result, true);
     }
 

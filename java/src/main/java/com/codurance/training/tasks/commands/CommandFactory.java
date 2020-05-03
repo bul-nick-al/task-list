@@ -11,21 +11,34 @@ public class CommandFactory {
 
     public Command create(String commandName, String parametersString) {
         switch (commandName) {
-            case "show":
+            case Command.CMD_SHOW:
                 return new ShowCommand();
-            case "add task":
+            case Command.CMD_ADD_TASK:
                 return new AddTaskCommand(parametersString);
-            case "add project":
+            case Command.CMD_ADD_PROJECT:
                 return new AddProjectCommand(parametersString);
-//            case "uncheck":
-//                return new TaskListUnCheckExecutableCommand(projectsToTasks);
-//            case "check":
-//                return new TaskListCheckExecutableCommand(projectsToTasks);
-//            case "help":
-//                return new HelpExecutableCommand(screen);
+            case Command.CMD_UNCHECK:
+                return new UncheckCommand(parametersString);
+            case Command.CMD_CHECK:
+                return new CheckCommand(parametersString);
+            case Command.CMD_HELP:
+                return new HelpCommand();
+            case Command.CMD_DEADLINE:
+                return new DeadlineCommand(parametersString);
+            case Command.CMD_TODAY:
+                return new TodayCommand();
+            case Command.CMD_DELETE:
+                return new DeleteCommand(parametersString);
+            case Command.CMD_VIEW_BY_DEADLINE:
+                return new ViewByDeadlineCommand(parametersString);
+            case Command.CMD_VIEW_BY_DATE:
+                return new ViewByDateCommand(parametersString);
+            case Command.CMD_VIEW_BY_PROJECT:
+                return new ViewByProjectCommand(parametersString);
+            case Command.CMD_BELONG:
+                return new BelongCommand(parametersString);
             default:
-//                return new UnknownCommand(screen);
-                return null;
+                return new UnknownCommand();
         }
     }
 

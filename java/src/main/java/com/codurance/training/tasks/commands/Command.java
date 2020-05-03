@@ -17,6 +17,13 @@ public interface Command {
     String CMD_CHECK = "check";
     String CMD_UNCHECK = "uncheck";
     String CMD_HELP = "help";
+    String CMD_DEADLINE = "deadline";
+    String CMD_TODAY = "today";
+    String CMD_DELETE = "delete";
+    String CMD_VIEW_BY_DEADLINE = "view by deadline";
+    String CMD_VIEW_BY_DATE = "view by date";
+    String CMD_VIEW_BY_PROJECT = "view by project";
+    String CMD_BELONG = "belong";
 
     ArrayList<String> commandNames = new ArrayList<>(Arrays.asList(CMD_ADD_PROJECT,
             CMD_ADD_TASK,
@@ -24,7 +31,14 @@ public interface Command {
             CMD_HELP,
             CMD_QUIT,
             CMD_SHOW,
-            CMD_UNCHECK));
+            CMD_UNCHECK,
+            CMD_DEADLINE,
+            CMD_TODAY,
+            CMD_DELETE,
+            CMD_VIEW_BY_DEADLINE,
+            CMD_VIEW_BY_DATE,
+            CMD_VIEW_BY_PROJECT,
+            CMD_BELONG));
 
     public void run(IO io, Formatter formatter, ProjectsRepository repository);
 }

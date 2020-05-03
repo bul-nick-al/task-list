@@ -1,8 +1,9 @@
 package com.codurance.training.tasks.model;
 
-import com.codurance.training.tasks.Task;
+import com.codurance.training.tasks.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class ProjectsRepository {
@@ -34,7 +35,7 @@ public class ProjectsRepository {
         return null;
     }
 
-    public String addTaskToProjects(String taskDescription, ArrayList<String> projects) {
+    public String addTaskToProject(String taskDescription, String projectName) {
         for (Task task : tasks) {
             if (task.getDescription().equals(taskDescription)){
                 return "The task already exists";
@@ -46,23 +47,105 @@ public class ProjectsRepository {
         StringBuilder result = new StringBuilder();
 
         boolean added = false;
-        for (String projectName : projects) {
-            if (!this.projects.containsKey(projectName))
-                result.append("Project ").append(projectName).append(" doesn't exist. Skipping... \n");
-            else {
-                this.projects.get(projectName).addTask(newTask);
-                added = true;
-            }
 
+        if (!this.projects.containsKey(projectName))
+            result.append("Project ").append(projectName).append(" doesn't exist. Skipping... \n");
+        else {
+            this.projects.get(projectName).addTask(newTask);
+            added = true;
         }
 
-        if (added)
+
+        if (added) {
             this.tasks.add(newTask);
-        result.append("Task added");
+            result.append("Task added");
+        }
+
         return result.toString();
     }
 
-    public Long getNextTaskId() {
-        return (long) this.tasks.size();
+    public String addTaskToProject(Integer taskId, String projectName) {
+        for (Task task : tasks) {
+            if (task.getId() == taskId){
+                if (!this.projects.containsKey(projectName))
+                    return ("Project doesn't exist.");
+                else {
+                    this.projects.get(projectName).addTask(task);
+                    return "Task added to project";
+                }
+            }
+        }
+
+        return "No task with provided id found";
+    }
+
+    public String setChecked(int taskId, boolean isChecked) {
+        for (Task task : tasks) {
+            if (task.getId() == taskId) {
+                task.setDone(isChecked);
+                return "Task " + (isChecked ? "checked." : "unchecked.");
+            }
+        }
+
+        return "No task with provided id found";
+    }
+
+    public String setDeadline(int taskId, Date deadline) {
+        for (Task task : tasks) {
+            if (task.getId() == taskId) {
+                task.setDeadline(deadline);
+                return "Deadline set.";
+            }
+        }
+
+        return "No task with provided id found";
+    }
+
+    public ArrayList<Task> getTasksForDeadline(Date date) {
+        ArrayList<Task> result = new ArrayList<>();
+        for (Task task : tasks) {
+            if (Utils.isSameDay(task.getDeadline(), date))
+                result.add(task);
+        }
+        return result;
+    }
+
+    public ArrayList<Task> getTasksForDate(Date date) {
+        ArrayList<Task> result = new ArrayList<>();
+        for (Task task : tasks) {
+            if (Utils.isSameDay(task.getDate(), date))
+                result.add(task);
+        }
+        return result;
+    }
+
+    public String deleteTask(int taskId) {
+        for (Task task : tasks) {
+            if (task.getId() == taskId) {
+                for (Project project : projects.values()) {
+                    deleteTask(task, project);
+                }
+                tasks.remove(task);
+                return "Task removed";
+            }
+        }
+        return "No task found with this id";
+    }
+
+    public void deleteTask(Task task, Project project) {
+        project.getTasks().remove(task);
+    }
+
+    public ArrayList<Task> getTasksForProject(String projectName) {
+        if (this.projects.containsKey(projectName)) {
+            return projects.get(projectName).getTasks();
+        }
+
+        return new ArrayList<>();
+    }
+
+
+    public int getNextTaskId() {
+        return this.tasks.size();
     }
 }
