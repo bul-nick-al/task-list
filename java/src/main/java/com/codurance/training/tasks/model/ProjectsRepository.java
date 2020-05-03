@@ -15,18 +15,46 @@ public class ProjectsRepository {
         this.tasks = new ArrayList<>();
     }
 
+    public enum AddProjectResult {
+        PROJECT_ADDED,
+        PROJECT_EXISTS
+    }
+
+    public enum AddTaskResult {
+        TASK_ADDED,
+        TASK_EXISTS,
+        PROJECT_NOT_EXISTS,
+        NO_TASK_FOUND
+    }
+
+    public enum SetCheckedResult {
+        CHECKED,
+        UNCHECKED,
+        NO_TASK_FOUND
+    }
+
+    public enum SetDeadlineResult {
+        DEADLINE_SET,
+        NO_TASK_FOUND
+    }
+
+    public enum DeleteTaskResult {
+        DELETED,
+        NO_TASK_FOUND
+    }
+
     public HashMap<String, Project> getProjects() {
         return projects;
     }
 
-    public String addProject(String projectName) {
+    public AddProjectResult addProject(String projectName) {
         if (projects.containsKey(projectName))
-            return "Project already exists";
+            return AddProjectResult.PROJECT_EXISTS;
 
         Project newProject = new Project(projectName);
         projects.put(projectName, newProject);
 
-        return "Project added";
+        return AddProjectResult.PROJECT_ADDED;
     }
 
     public Project getProject(String name) {
@@ -35,70 +63,58 @@ public class ProjectsRepository {
         return null;
     }
 
-    public String addTaskToProject(String taskDescription, String projectName) {
+    public AddTaskResult addTaskToProject(String taskDescription, String projectName) {
         for (Task task : tasks) {
             if (task.getDescription().equals(taskDescription)){
-                return "The task already exists";
+                return AddTaskResult.TASK_EXISTS;
             }
         }
 
         Task newTask = new Task(getNextTaskId(), taskDescription, false);
 
-        StringBuilder result = new StringBuilder();
-
-        boolean added = false;
-
         if (!this.projects.containsKey(projectName))
-            result.append("Project ").append(projectName).append(" doesn't exist. Skipping... \n");
-        else {
+            return AddTaskResult.PROJECT_NOT_EXISTS;
+        else
             this.projects.get(projectName).addTask(newTask);
-            added = true;
-        }
 
-
-        if (added) {
-            this.tasks.add(newTask);
-            result.append("Task added");
-        }
-
-        return result.toString();
+        return AddTaskResult.TASK_ADDED;
     }
 
-    public String addTaskToProject(Integer taskId, String projectName) {
+    public AddTaskResult addTaskToProject(Integer taskId, String projectName) {
         for (Task task : tasks) {
             if (task.getId() == taskId){
                 if (!this.projects.containsKey(projectName))
-                    return ("Project doesn't exist.");
+                    return AddTaskResult.PROJECT_NOT_EXISTS;
                 else {
                     this.projects.get(projectName).addTask(task);
-                    return "Task added to project";
+                    return AddTaskResult.TASK_ADDED;
                 }
             }
         }
 
-        return "No task with provided id found";
+        return AddTaskResult.NO_TASK_FOUND;
     }
 
-    public String setChecked(int taskId, boolean isChecked) {
+    public SetCheckedResult setChecked(int taskId, boolean isChecked) {
         for (Task task : tasks) {
             if (task.getId() == taskId) {
                 task.setDone(isChecked);
-                return "Task " + (isChecked ? "checked." : "unchecked.");
+                return isChecked ? SetCheckedResult.CHECKED : SetCheckedResult.UNCHECKED;
             }
         }
 
-        return "No task with provided id found";
+        return SetCheckedResult.NO_TASK_FOUND;
     }
 
-    public String setDeadline(int taskId, Date deadline) {
+    public SetDeadlineResult setDeadline(int taskId, Date deadline) {
         for (Task task : tasks) {
             if (task.getId() == taskId) {
                 task.setDeadline(deadline);
-                return "Deadline set.";
+                return SetDeadlineResult.DEADLINE_SET;
             }
         }
 
-        return "No task with provided id found";
+        return SetDeadlineResult.NO_TASK_FOUND;
     }
 
     public ArrayList<Task> getTasksForDeadline(Date date) {
@@ -119,17 +135,17 @@ public class ProjectsRepository {
         return result;
     }
 
-    public String deleteTask(int taskId) {
+    public DeleteTaskResult deleteTask(int taskId) {
         for (Task task : tasks) {
             if (task.getId() == taskId) {
                 for (Project project : projects.values()) {
                     deleteTask(task, project);
                 }
                 tasks.remove(task);
-                return "Task removed";
+                return DeleteTaskResult.DELETED;
             }
         }
-        return "No task found with this id";
+        return DeleteTaskResult.NO_TASK_FOUND;
     }
 
     public void deleteTask(Task task, Project project) {

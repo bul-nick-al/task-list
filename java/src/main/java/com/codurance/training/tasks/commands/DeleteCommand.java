@@ -18,7 +18,7 @@ public class DeleteCommand implements Command {
             io.write("The provided task id must be an integer number.", true);
             return;
         }
-        io.write(repository.deleteTask(taskId), true);
+        io.write(formatter.show(repository.deleteTask(taskId)), true);
     }
 
     private void parseParameters(String rawParams) {
