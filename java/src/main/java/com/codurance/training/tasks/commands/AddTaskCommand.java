@@ -15,12 +15,20 @@ public class AddTaskCommand implements Command {
 
     @Override
     public void run(IO io, Formatter formatter, ProjectsRepository repository) {
-        String result = repository.addTaskToProject(taskDescription, projectName);
-        io.write(result, true);
+        if (projectName != null && taskDescription != null) {
+            String result = repository.addTaskToProject(taskDescription, projectName);
+            io.write(result, true);
+            return;
+        }
+
+        io.write("Not enough parameters", true);
+
     }
 
     private void parseParameters(String rawParams) {
         String[] parsedParams = rawParams.split(" ");
+        if (parsedParams.length < 2)
+            return;
         projectName = parsedParams[0];
         taskDescription = parsedParams[1];
     }

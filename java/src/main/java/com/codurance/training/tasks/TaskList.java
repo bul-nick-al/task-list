@@ -2,7 +2,6 @@ package com.codurance.training.tasks;
 
 import com.codurance.training.tasks.commands.Command;
 import com.codurance.training.tasks.model.ProjectsRepository;
-import com.codurance.training.tasks.model.Task;
 import com.codurance.training.tasks.utils.CommandLine;
 import com.codurance.training.tasks.utils.Formatter;
 import com.codurance.training.tasks.utils.IO;
@@ -47,7 +46,7 @@ public final class TaskList implements Runnable {
         }
     }
 
-    private void execute(Command command) {
+    protected void execute(Command command) {
         command.run(io, formatter, repository);
     }
 }

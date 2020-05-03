@@ -27,7 +27,8 @@ public class DeadlineCommand implements Command{
 
     private void parseParameters(String parameters) {
         String[] splitParameters = parameters.split(" ");
-
+        if (splitParameters.length < 2)
+            return;
         taskId = Utils.tryParseInt(splitParameters[0]);
         date = Utils.tryParseDate(splitParameters[1]);
     }

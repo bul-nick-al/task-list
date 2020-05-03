@@ -15,12 +15,17 @@ public class BelongCommand implements Command {
 
     @Override
     public void run(IO io, Formatter formatter, ProjectsRepository repository) {
-        io.write(repository.addTaskToProject(taskId, projectName), true);
+        if (projectName != null && taskId != null) {
+            io.write(repository.addTaskToProject(taskId, projectName), true);
+            return;
+        }
+        io.write("Not enough parameters", true);
     }
 
     private void parseParameters(String parameters) {
         String[] params = parameters.split(" ");
-
+        if (params.length < 2)
+            return;
         this.projectName = params[1];
         this.taskId = Utils.tryParseInt(params[0]);
     }
